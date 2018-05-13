@@ -1,0 +1,4 @@
+OBJ : Path = '../../build/obj/';
+for each File '../../src/**/*.c' as file
+  with shell execute 'gcc -i ${file.path} -o \'../../build/obj/${file.basename}.o\''
+  obj:File = file.basename + '.o'

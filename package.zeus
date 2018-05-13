@@ -1,0 +1,15 @@
+return struct package:
+  name: 'zeus-lang-tech'
+  version: '0.0.a1'
+  author: 'Joshua Hedges'
+  license: 'MIT'
+  description: 'Zeus language technology. A parser generator, build system with file watching, a Turing complete DSL for build scripts and system utilities.'
+  keywords: 'zeus'
+  scripts: 'scripts/zeus/'+
+    'build'
+    'install'
+    'execute'
+  dependencies:;
+  repository:
+    git : 'https://github.com/madpumpkin/zeus-lang-tech'
+  contributors:;
