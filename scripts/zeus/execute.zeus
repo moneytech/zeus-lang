@@ -1,0 +1,3 @@
+-- Execute build target
+import Shell
+Shell.execute build.TARGET

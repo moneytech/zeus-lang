@@ -1,4 +1,26 @@
-OBJ : Path = '../../build/obj/';
-for each File '../../src/**/*.c' as file
-  with shell execute 'gcc -i ${file.path} -o \'../../build/obj/${file.basename}.o\''
-  obj:File = file.basename + '.o'
+-- "from zeus.types" is implied when not present in an import
+import Path Shell
+
+-- Set package
+zeus.package = '../../package.zeus'
+
+-- Alias Path.package_relative type function
+dir := Path.package_relative
+
+-- Package directory will be prepended lazily upon access
+BIN_DIR : dir = 'build/bin'
+TARGET : dir = BIN_DIR + 'zeus'
+OBJ_DIR : dir = 'build/obj/'
+
+-- Declaring something as a list uses [bracket notation]
+SRC_FILES : [dir] = 'src/**/*.c'
+INC_FILES : [dir] = 'src/**/*.h'
+
+-- Build all sources to objects
+for file in SRC_FILES
+  Shell.execute 'gcc -i ${file.path} -o ${OBJ}${file.basename}.o'
+
+-- Make executable from objects
+OBJ_FILES : [dir] = 'build/obj/**/*.o'
+OBJ_STRING := OBJ_FILES.join ' '
+Shell.execute 'gcc ${TARGET} ${OBJ_STRING}'

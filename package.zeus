@@ -1,4 +1,4 @@
-return struct package:
+zeus.struct package:
   name: 'zeus-lang-tech'
   version: '0.0.a1'
   author: 'Joshua Hedges'
