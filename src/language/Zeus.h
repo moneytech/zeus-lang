@@ -1,12 +1,12 @@
-#include "system/ZeusPlatform.h"
-#include "system/ZeusFileSystem.h"
-#include "system/ZeusCommandLine.h"
-#include "ZeusVirtualMachine.h"
+#include "core/system/ZeusPlatform.h"
+#include "core/system/ZeusFileSystem.h"
+#include "core/system/ZeusCommandLine.h"
+#include "core/ZeusVirtualMachine.h"
 
 struct Zeus {
-  ZeusVirtualMachine * vm;
-  ZeusCommandLine * cli;
-  ZeusFileSystem * fs;
-  ZeusPlatform * sys;
-  ZeusDaemon * daemon;
+  struct ZeusVirtualMachine * vm;
+  struct ZeusCommandLine * cli;
+  struct ZeusFileSystem * fs;
+  struct ZeusPlatform * sys;
+  // ZeusDaemon * daemon;
 };
