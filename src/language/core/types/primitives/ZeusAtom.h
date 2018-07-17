@@ -15,11 +15,11 @@
 @*/
 enum ZeusAtomType { FUNCTION, NUMBER, STRING, CELL, ARRAY };
 union ZeusAtomValue {
-  struct ZeusFunction f;
-  struct ZeusNumber n;
-  struct ZeusString s;
-  struct ZeusCell c;
-  struct ZeusArray a;
+  struct ZeusFunction * f;
+  struct ZeusNumber * n;
+  struct ZeusString * s;
+  struct ZeusCell * c;
+  struct ZeusArray * a;
 };
 struct ZeusAtom {
   union ZeusAtomValue value;

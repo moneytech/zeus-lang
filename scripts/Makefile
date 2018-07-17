@@ -6,7 +6,7 @@ PROJECT			=	zeus
 AR					= ar
 CC					= gcc
 AR_FLAGS		=	rcs
-CC_FLAGS		= -g -Wall -pedantic -std=c99
+CC_FLAGS		= -g -Wall -pedantic -pedantic-errors -std=c99
 CC_LIB			= -lm
 # Top level directories
 DIR_ROOT 		= ..
@@ -22,10 +22,10 @@ DIR_OBJ			= $(DIR_BUILD)/obj
 DIR_BIN			= $(DIR_BUILD)/bin
 DIR_LIB			= $(DIR_BUILD)/lib
 # File paths
-LIB_TARGET_SRC			= $(wildcard $(DIR_LIB_SRC)/**/*.c)
+LIB_TARGET_SRC			= $(wildcard $(DIR_LIB_SRC)/**/**/**/**/**/*.c)
 TARGET_SRC					= $(wildcard $(DIR_SRC)/**/*.c)
-LIB_TARGET_HEADERS	= $(wildcard $(DIR_LIB_SRC)/**/*.h)
-TARGET_HEADERS			= $(wildcard $(DIR_SRC)/**/*.h)
+LIB_TARGET_HEADERS	= $(wildcard $(DIR_LIB_SRC)/**/**/**/**/**/*.h)
+TARGET_HEADERS			= $(wildcard $(DIR_SRC)/**/**/**/**/**/*.h)
 HEADERS							= $(LIB_TARGET_HEADERS) $(TARGET_HEADERS)
 # Artifact patterns
 LIB_TARGET_OBJ	= $(patsubst $(DIR_LIB_SRC)/%.c,$(DIR_OBJ)/%.o,$(LIB_TARGET_SRC))
@@ -39,12 +39,17 @@ TARGET			= $(DIR_BIN)/$(PROJECT)
 ####################
 .PHONY: default clean all library executable
 build_dirs:
-	-mkdir -p $(DIR_BUILD) $(DIR_OBJ) $(DIR_BIN) $(DIR_LIB)
+	-mkdir -p $(DIR_BUILD)
+	-mkdir -p $(DIR_OBJ)
+	-mkdir -p $(DIR_BIN)
+	-mkdir -p $(DIR_LIB)
 # Build zeus.exe linking libzeus.a to it
 $(TARGET): $(TARGET_OBJ) $(LIB_TARGET)
-	$(CC) $(CC_FLAGS) $(TARGET_OBJ) -o $@ -L$(DIR_LIB) -l$(PROJECT) -I$(DIR_SRC)
+	-mkdir -p $(@D)
+	$(CC) $(CC_FLAGS) $(TARGET_OBJ) -o $@ -L$(DIR_LIB) -l$(PROJECT) -I$(DIR_SRC) $(HEADERS)
 # Build libzeus.a
-$(LIB_TARGET): $(LIB_TARGET_OBJ) $(build_dirs)
+$(LIB_TARGET): $(LIB_TARGET_OBJ)
+	-mkdir -p $(@D)
 	$(AR) $(AR_FLAGS) $@ $?
 # Build .o files
 $(OBJ): $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c $(HEADERS)
